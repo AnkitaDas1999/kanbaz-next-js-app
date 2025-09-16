@@ -1,0 +1,63 @@
+export default function Modules() {
+  return (
+    <div>
+      <button type="button" id="collapse-all">
+        Collapse All
+      </button>
+      <button type="button" id="view-progress">
+        View Progress
+      </button>
+      <select id="wd-select-one-dropdown-item">
+        <option value="PUBLISH ALL">Publish All</option>
+        <option value="FILTER BY DATE">Filter By Date</option>
+      </select>
+      <button type="button" id="add-module">
+        + Module
+      </button>
+      <ul id="wd-modules">
+        <li className="wd-module">
+          <div className="wd-title">Week 1</div>
+          <ul className="wd-lessons">
+            <li className="wd-lesson">
+              <span className="wd-title">LEARNING OBJECTIVES</span>
+              <ul className="wd-content">
+                <li className="wd-content-item">Introduction to the course</li>
+                <li className="wd-content-item">
+                  Learn what is Web Development
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li className="wd-module">
+          <div className="wd-title">Week 2</div>
+          <ul className="wd-lessons">
+            <li className="wd-lesson">
+              <span className="wd-title">LEARNING OBJECTIVES</span>
+              <ul className="wd-content">
+                <li className="wd-content-item">Navigation</li>
+                <li className="wd-content-item">
+                  Learn how to name files for navigation
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li className="wd-module">
+          <div className="wd-title">Week 3</div>
+          <ul className="wd-lessons">
+            <li className="wd-lesson">
+              <span className="wd-title">LEARNING OBJECTIVES</span>
+              <ul className="wd-content">
+                <li className="wd-content-item">CSS</li>
+                <li className="wd-content-item">
+                  Learn to style your web pages
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  );
+}
