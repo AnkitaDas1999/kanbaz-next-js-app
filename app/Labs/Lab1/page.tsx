@@ -8,11 +8,26 @@ export default function Lab1() {
 
       <h2>Navigation</h2>
       <ul>
-        <li><Link href="/Labs/Lab1">Lab 1: HTML Examples</Link></li>
-        <li><Link href="/Labs/Lab2">Lab 2: CSS Basics</Link></li>
-        <li><Link href="/Labs/Lab3">Lab 3: JavaScript Fundamentals</Link></li>
-        <li><Link href="/Account/Signin">Kambaz</Link></li>
-        <li><a href="https://github.com/AnkitaDas1999/kanbaz-next-js-app/tree/A1">Source Code Repository</a></li>
+        <li>
+          <Link href="/Labs/Lab1">Lab 1: HTML Examples</Link>
+        </li>
+        <li>
+          <Link href="/Labs/Lab2">Lab 2: CSS Basics</Link>
+        </li>
+        <li>
+          <Link href="/Labs/Lab3">Lab 3: JavaScript Fundamentals</Link>
+        </li>
+        <li>
+          <Link href="/Account/Signin">Kambaz</Link>
+        </li>
+        <li>
+          <a
+            href="https://github.com/AnkitaDas1999/kanbaz-next-js-app/tree/A1"
+            target="_blank"
+          >
+            Source Code Repository - GitHub
+          </a>
+        </li>
       </ul>
 
       <h2>Lab 1</h2>
@@ -325,11 +340,21 @@ export default function Lab1() {
           </option>
           <option value="FANTASY"> Fantasy </option>
         </select>
-
         <h4>Anchor tag</h4>
-        Please <a href="https://www.lipsum.com" id="wd-lipsum">click here</a> to get dummy text
+        Please{" "}
+        <a href="https://www.lipsum.com" id="wd-lipsum">
+          click here
+        </a>{" "}
+        to get dummy text
         <br />
-        This is my <a href="https://github.com/AnkitaDas1999/kanbaz-next-js-app" id="wd-lab2-link">repository</a> link
+        This is my{" "}
+        <a
+          href="https://github.com/AnkitaDas1999/kanbaz-next-js-app"
+          id="wd-lab2-link"
+        >
+          repository
+        </a>{" "}
+        link
       </div>
     </div>
   );
