@@ -8,7 +8,7 @@ export default function Dashboard() {
       <div id="wd-dashboard-courses">
         <div className="wd-dashboard-course">
           <Link href="/Courses/1234" className="wd-dashboard-course-link">
-            <Image src="/images/reactjs.jpg" width={200} height={150} />
+            <Image src="/images/reactjs.jpg" width={200} height={150} alt="React JS Course"/>
             <div>
               <h5> CS1234 React JS </h5>
               <p className="wd-dashboard-course-title">
@@ -20,7 +20,7 @@ export default function Dashboard() {
         </div>
         <div className="wd-dashboard-course">
           <Link href="/Courses/1235" className="wd-dashboard-course-link">
-            <Image src="/images/webdev.jpg" width={200} height={150} />
+            <Image src="/images/webdev.jpg" width={200} height={150} alt="Web Development Course"/>
             <div>
               <h5> CS5610 Web Development </h5>
               <p className="wd-dashboard-course-title">
@@ -32,7 +32,7 @@ export default function Dashboard() {
         </div>
         <div className="wd-dashboard-course">
             <Link href="/Courses/1236" className="wd-dashboard-course-link">
-            <Image src="/images/dsa.jpg" width={200} height={150} />
+            <Image src="/images/dsa.jpg" width={200} height={150} alt="Data Structures and Algorithms Course"/>
             <div>
               <h5> CS3843 Data Structures and Algorithms </h5>
               <p className="wd-dashboard-course-title">
@@ -44,7 +44,7 @@ export default function Dashboard() {
         </div>
         <div className="wd-dashboard-course">
           <Link href="/Courses/1237" className="wd-dashboard-course-link">
-            <Image src="/images/machinelearning.jpg" width={200} height={150} alt="Machine Learning" />
+            <Image src="/images/machinelearning.jpg" width={200} height={150} alt="Machine Learning Course"/>
             <div>
               <h5>CS4700 Machine Learning</h5>
               <p className="wd-dashboard-course-title">
@@ -56,7 +56,7 @@ export default function Dashboard() {
         </div>
         <div className="wd-dashboard-course">
           <Link href="/Courses/1238" className="wd-dashboard-course-link">
-            <Image src="/images/databases.jpg" width={200} height={150} alt="Databases" />
+            <Image src="/images/databases.jpg" width={200} height={150} alt="Databases Course" />
             <div>
               <h5>CS3200 Database Systems</h5>
               <p className="wd-dashboard-course-title">
@@ -68,7 +68,7 @@ export default function Dashboard() {
         </div>
         <div className="wd-dashboard-course">
           <Link href="/Courses/1239" className="wd-dashboard-course-link">
-            <Image src="/images/cybersecurity.jpg" width={200} height={150} alt="Cybersecurity" />
+            <Image src="/images/cybersecurity.jpg" width={200} height={150} alt="Cybersecurity Course" />
             <div>
               <h5>CS3500 Cybersecurity</h5>
               <p className="wd-dashboard-course-title">
@@ -80,7 +80,7 @@ export default function Dashboard() {
         </div>
         <div className="wd-dashboard-course">
           <Link href="/Courses/1240" className="wd-dashboard-course-link">
-            <Image src="/images/cloudcomputing.jpg" width={200} height={150} alt="Cloud Computing" />
+            <Image src="/images/cloudcomputing.jpg" width={200} height={150} alt="Cloud Computing Course" />
             <div>
               <h5>CS4200 Cloud Computing</h5>
               <p className="wd-dashboard-course-title">
@@ -92,7 +92,7 @@ export default function Dashboard() {
         </div>
         <div className="wd-dashboard-course">
           <Link href="/Courses/1241" className="wd-dashboard-course-link">
-            <Image src="/images/ai.jpg" width={200} height={150} alt="Artificial Intelligence" />
+            <Image src="/images/ai.jpg" width={200} height={150} alt="Artificial Intelligence Course" />
             <div>
               <h5>CS4100 Artificial Intelligence</h5>
               <p className="wd-dashboard-course-title">
