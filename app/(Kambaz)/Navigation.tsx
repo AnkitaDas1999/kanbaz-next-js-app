@@ -6,6 +6,10 @@ export default function KambazNavigation() {
         Northeastern
       </a>
       <br />
+      <Link href="/" id="wd-landing-page-link">
+        Home
+      </Link>
+      <br />
       <Link href="/Account" id="wd-account-link">
         Account
       </Link>
