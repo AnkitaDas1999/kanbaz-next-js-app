@@ -1,8 +1,20 @@
 "use client";
+import Link from "next/link";
 
 export default function Lab1() {
   return (
     <div id="wd-lab1">
+      <h1>Ankita Das</h1>
+
+      <h2>Navigation</h2>
+      <ul>
+        <li><Link href="/Labs/Lab1">Lab 1</Link></li>
+        <li><Link href="/Labs/Lab2">Lab 2</Link></li>
+        <li><Link href="/Labs/Lab3">Lab 3</Link></li>
+        <li><Link href="/Account/Signin">Kambaz Application</Link></li>
+        <li><a href="https://github.com/AnkitaDas1999/kanbaz-next-js-app/tree/A1">Source Code Repository</a></li>
+      </ul>
+
       <h2>Lab 1</h2>
       <h3>HTML Examples</h3>
       <div id="wd-h-tag">
