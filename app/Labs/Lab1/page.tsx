@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Lab1() {
   return (
     <div id="wd-lab1">
-      <h1>Ankita Das</h1>
+      <h1>Ankita Das - SEC 05</h1>
 
       <h2>Navigation</h2>
       <ul>

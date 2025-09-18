@@ -22,11 +22,11 @@ export default function KambazNavigation() {
         Courses
       </Link>
       <br />
-      <Link href="/Calendar" id="wd-calendar-link">
+      <Link href="#" id="wd-calendar-link">
         Calendar
       </Link>
       <br />
-      <Link href="/Inbox" id="wd-inbox-link">
+      <Link href="#" id="wd-inbox-link">
         Inbox
       </Link>
       <br />
