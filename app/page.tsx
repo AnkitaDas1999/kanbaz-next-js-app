@@ -12,6 +12,10 @@ export default function Home() {
       <Link href="/Labs">
         View Lab Exercises
       </Link>
+      <br />
+      <Link href="https://github.com/AnkitaDas1999/kanbaz-next-js-app/tree/A1" target="_blank">
+        Source Code Repository - GitHub
+      </Link>
     </div>
   );
 }
