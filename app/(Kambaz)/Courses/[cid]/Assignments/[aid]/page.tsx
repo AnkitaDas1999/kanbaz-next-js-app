@@ -1,4 +1,3 @@
-// app/(Kambaz)/Courses/[cid]/Assignments/[aid]/page.tsx
 export default function AssignmentEditor() {
   return (
     <div id="wd-assignments-editor">
