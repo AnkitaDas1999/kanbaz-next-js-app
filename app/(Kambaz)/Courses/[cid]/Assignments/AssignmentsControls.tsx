@@ -7,24 +7,24 @@ export default function AssignmentsControls() {
   return (
     <div className="d-flex justify-content-between align-items-center mb-4">
       <div className="d-flex align-items-center flex-grow-1 me-3">
-        <InputGroup style={{ maxWidth: "300px" }}>
+        <InputGroup style={{ maxWidth: "400px" }}>
           <InputGroupText className="bg-white border-end-0">
             <IoSearch />
           </InputGroupText>
           <Form.Control
             type="text"
-            placeholder="Search for Assignments"
+            placeholder="Search..."
             className="border-start-0"
           />
         </InputGroup>
       </div>
       
       <div className="d-flex gap-2">
-        <Button variant="outline-secondary" size="sm">
+        <Button variant="secondary" size="lg" className="me-1 float-end">
           <FaPlus className="me-1" />
           Group
         </Button>
-        <Button variant="danger" size="sm">
+        <Button variant="danger" size="lg">
           <FaPlus className="me-1" />
           Assignment
         </Button>
