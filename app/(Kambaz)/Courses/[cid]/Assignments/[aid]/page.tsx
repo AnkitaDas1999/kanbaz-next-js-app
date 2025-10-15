@@ -15,12 +15,12 @@ export default function AssignmentEditor() {
 
   return (
     <div>
-      <h2 className="mb-4">Editing Assignment: {assignment.title}</h2>
+      <h2 className="mb-4">Editing Assignment: {assignment.name}</h2>
 
       <Form>
         <Form.Group className="mb-3">
           <Form.Label>Assignment Name</Form.Label>
-          <Form.Control defaultValue={assignment.title} />
+          <Form.Control defaultValue={assignment.name} />
         </Form.Group>
 
         <Form.Group className="mb-3">
@@ -48,7 +48,7 @@ export default function AssignmentEditor() {
                   <Form.Label>
                     <strong>Due</strong>
                   </Form.Label>
-                  <Form.Control type="date" defaultValue={assignment.due_date} />
+                  <Form.Control type="date" defaultValue={assignment.endDate} />
                 </Form.Group>
                 <Row className="mt-3">
                   <Col>
@@ -57,7 +57,7 @@ export default function AssignmentEditor() {
                     </Form.Label>
                     <Form.Control
                       type="date"
-                      defaultValue={assignment.available_from_date}
+                      defaultValue={assignment.startDate}
                     />
                   </Col>
                   <Col>
@@ -66,7 +66,7 @@ export default function AssignmentEditor() {
                     </Form.Label>
                     <Form.Control
                       type="date"
-                      defaultValue={assignment.available_until_date}
+                      defaultValue={assignment.endDate}
                     />
                   </Col>
                 </Row>

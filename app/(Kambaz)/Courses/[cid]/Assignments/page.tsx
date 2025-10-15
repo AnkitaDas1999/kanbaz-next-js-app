@@ -12,7 +12,7 @@ export default function Assignments() {
 
   // 2. Filter assignments for the current course
   const courseAssignments = db.assignments.filter(
-    (assignment) => assignment.course === cid
+    (assignment) => assignment._id === cid
   );
 
   return (
