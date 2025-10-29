@@ -1,3 +1,4 @@
+"use client";
 import { useDispatch } from "react-redux";
 import { deleteTodo, setTodo } from "./todosReducer";
 import { Button } from "react-bootstrap";
