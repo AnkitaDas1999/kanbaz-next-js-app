@@ -18,6 +18,9 @@ export default function Lab1() {
           <Link href="/Labs/Lab3">Lab 3: JavaScript Fundamentals</Link>
         </li>
         <li>
+          <Link href="/Labs/Lab4">Lab 4: React State Management</Link>
+        </li>
+        <li>
           <Link href="/Account/Signin">Kambaz</Link>
         </li>
         <li>
@@ -214,7 +217,7 @@ export default function Lab1() {
           <label htmlFor="wd-text-fields-password">Password:</label>
           <input
             type="password"
-            value="123@#$asd"
+            defaultValue="123@#$asd"
             id="wd-text-fields-password"
           />
           <br />
