@@ -2,6 +2,8 @@
 import { useSelector, useDispatch } from "react-redux";
 import { increment, decrement } from "./counterReducer";
 
+export const dynamic = "force-dynamic";
+
 export default function CounterRedux() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { count } = useSelector((state: any) => state.counterReducer);
