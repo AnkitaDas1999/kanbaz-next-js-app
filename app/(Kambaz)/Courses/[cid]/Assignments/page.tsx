@@ -4,25 +4,29 @@ import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { ListGroup, ListGroupItem, Button } from "react-bootstrap";
 import { FaBook, FaTrash } from "react-icons/fa";
-import { useSelector, useDispatch } from "react-redux";
-import { deleteAssignment } from "./reducer";
+import { useEffect, useState } from "react";
+import * as client from "./client";
 import AssignmentsControls from "./AssignmentsControls";
 
 export default function Assignments() {
   const { cid } = useParams();
   const router = useRouter();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { assignments } = useSelector((state: any) => state.assignmentsReducer);
-  const dispatch = useDispatch();
+  const [assignments, setAssignments] = useState<any[]>([]);
 
-  const courseAssignments = assignments.filter(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (assignment: any) => assignment.course === cid
-  );
+  const fetchAssignments = async () => {
+    const assignments = await client.findAssignmentsForCourse(cid as string);
+    setAssignments(assignments);
+  };
 
-  const handleDelete = (assignmentId: string) => {
+  useEffect(() => {
+    fetchAssignments();
+  }, [cid]);
+
+  const handleDelete = async (assignmentId: string) => {
     if (window.confirm("Are you sure you want to delete this assignment?")) {
-      dispatch(deleteAssignment(assignmentId));
+      await client.deleteAssignment(cid as string, assignmentId);
+      fetchAssignments();
     }
   };
 
@@ -34,7 +38,7 @@ export default function Assignments() {
       <br />
       <ListGroup className="rounded-0">
         {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-        {courseAssignments.map((assignment: any) => (
+        {assignments.map((assignment: any) => (
           <ListGroupItem
             key={assignment._id}
             className="d-flex justify-content-between align-items-center"

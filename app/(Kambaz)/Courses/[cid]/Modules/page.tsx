@@ -33,14 +33,14 @@ export default function Modules() {
   };
 
   const removeModule = async (moduleId: string) => {
-    await coursesClient.deleteModule(moduleId);
+    await coursesClient.deleteModule(cid as string, moduleId);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     dispatch(setModules(modules.filter((m: any) => m._id !== moduleId)));
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const saveModule = async (module: any) => {
-    await coursesClient.updateModule(module);
+    await coursesClient.updateModule(cid as string, module);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     dispatch(setModules(modules.map((m: any) => (m._id === module._id ? module : m))));
   };
