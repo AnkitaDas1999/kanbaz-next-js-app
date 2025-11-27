@@ -12,6 +12,7 @@ export default function Dashboard() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [allCourses, setAllCourses] = useState<any[]>([]);
   const [showAddCourse, setShowAddCourse] = useState(false);
+  const [showEnrolledOnly, setShowEnrolledOnly] = useState(true); // ← NEW STATE
   const [course, setCourse] = useState({
     name: "New Course",
     number: "New Number",
@@ -97,6 +98,10 @@ export default function Dashboard() {
     return courses.some((c) => c._id === courseId);
   };
 
+  // ← NEW: Determine which courses to display
+  const displayedCourses = showEnrolledOnly ? courses : allCourses;
+  const displayCount = displayedCourses.length;
+
   return (
     <div id="wd-dashboard">
       <h1 id="wd-dashboard-title">Dashboard</h1>
@@ -138,122 +143,106 @@ export default function Dashboard() {
         </>
       )}
 
-      <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2>
+      {/* ← NEW: Toggle Button */}
+      <h2 id="wd-dashboard-published">
+        Published Courses ({displayCount})
+        <button
+          className="btn btn-primary float-end"
+          onClick={() => setShowEnrolledOnly(!showEnrolledOnly)}
+        >
+          {showEnrolledOnly ? "All Courses" : "Enrollments"}
+        </button>
+      </h2>
       <hr />
 
       <div className="row row-cols-1 row-cols-md-5 g-4">
-        {courses.map((course) => (
-          <div key={course._id} className="col" style={{ width: "300px" }}>
-            <div className="card rounded-3 overflow-hidden">
-              <Link
-                href={`/Courses/${course._id}/Home`}
-                className="wd-dashboard-course-link text-decoration-none text-dark"
-              >
-                <img
-                  src="/images/reactjs.jpg"
-                  width="100%"
-                  height={160}
-                  alt={course.name}
-                />
-                <div className="card-body">
-                  <h5 className="wd-dashboard-course-title card-title">
-                    {course.name}
-                  </h5>
-                  <p
-                    className="wd-dashboard-course-title card-text overflow-y-hidden"
-                    style={{ maxHeight: 100 }}
-                  >
-                    {course.description}
-                  </p>
-                  <button className="btn btn-primary"> Go </button>
-
-                  {/* Faculty Controls */}
-                  {isFaculty && (
-                    <>
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          deleteCourse(course._id);
-                        }}
-                        className="btn btn-danger float-end"
-                        id="wd-delete-course-click"
-                      >
-                        Delete
-                      </button>
-                      <button
-                        id="wd-edit-course-click"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setCourse(course);
-                        }}
-                        className="btn btn-warning float-end me-2"
-                      >
-                        Edit
-                      </button>
-                    </>
-                  )}
-
-                  {/* Student Controls - Only show if NOT faculty */}
-                  {!isFaculty && (
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        unenrollFromCourse(course._id);
-                      }}
-                      className="btn btn-danger float-end"
-                    >
-                      Unenroll
-                    </button>
-                  )}
-                </div>
-              </Link>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* All Courses Section (Students Only) */}
-      {!isFaculty && (
-        <>
-          <h2 className="mt-5">All Courses ({allCourses.length})</h2>
-          <hr />
-          <div className="row row-cols-1 row-cols-md-5 g-4">
-            {allCourses
-              .filter((course) => !isEnrolled(course._id))
-              .map((course) => (
-                <div
-                  key={course._id}
-                  className="col"
-                  style={{ width: "300px" }}
+        {displayedCourses.map((course) => {
+          const enrolled = isEnrolled(course._id);
+          
+          return (
+            <div key={course._id} className="col" style={{ width: "300px" }}>
+              <div className="card rounded-3 overflow-hidden">
+                <Link
+                  href={`/Courses/${course._id}/Home`}
+                  className="wd-dashboard-course-link text-decoration-none text-dark"
                 >
-                  <div className="card rounded-3 overflow-hidden">
-                    <img
-                      src="/images/reactjs.jpg"
-                      width="100%"
-                      height={160}
-                      alt={course.name}
-                    />
-                    <div className="card-body">
-                      <h5 className="card-title">{course.name}</h5>
-                      <p
-                        className="card-text overflow-y-hidden"
-                        style={{ maxHeight: 100 }}
-                      >
-                        {course.description}
-                      </p>
-                      <button
-                        onClick={() => enrollInCourse(course._id)}
-                        className="btn btn-primary w-100"
-                      >
-                        Enroll
-                      </button>
-                    </div>
+                  <img
+                    src="/images/reactjs.jpg"
+                    width="100%"
+                    height={160}
+                    alt={course.name}
+                  />
+                  <div className="card-body">
+                    <h5 className="wd-dashboard-course-title card-title">
+                      {course.name}
+                    </h5>
+                    <p
+                      className="wd-dashboard-course-title card-text overflow-y-hidden"
+                      style={{ maxHeight: 100 }}
+                    >
+                      {course.description}
+                    </p>
+                    <button className="btn btn-primary"> Go </button>
+
+                    {/* Faculty Controls */}
+                    {isFaculty && (
+                      <>
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            deleteCourse(course._id);
+                          }}
+                          className="btn btn-danger float-end"
+                          id="wd-delete-course-click"
+                        >
+                          Delete
+                        </button>
+                        <button
+                          id="wd-edit-course-click"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setCourse(course);
+                          }}
+                          className="btn btn-warning float-end me-2"
+                        >
+                          Edit
+                        </button>
+                      </>
+                    )}
+
+                    {/* Student Controls - Show Enroll/Unenroll based on enrollment status */}
+                    {!isFaculty && (
+                      <>
+                        {enrolled ? (
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              unenrollFromCourse(course._id);
+                            }}
+                            className="btn btn-danger float-end"
+                          >
+                            Unenroll
+                          </button>
+                        ) : (
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              enrollInCourse(course._id);
+                            }}
+                            className="btn btn-success float-end"
+                          >
+                            Enroll
+                          </button>
+                        )}
+                      </>
+                    )}
                   </div>
-                </div>
-              ))}
-          </div>
-        </>
-      )}
+                </Link>
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

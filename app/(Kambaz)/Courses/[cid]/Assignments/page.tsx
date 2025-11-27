@@ -37,41 +37,43 @@ export default function Assignments() {
       <br />
       <br />
       <ListGroup className="rounded-0">
-        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-        {assignments.map((assignment: any) => (
-          <ListGroupItem
-            key={assignment._id}
-            className="d-flex justify-content-between align-items-center"
-          >
-            <div>
-              <FaBook className="me-2 text-success" />
-              <Link
-                href={`/Courses/${cid}/Assignments/${assignment._id}`}
-                className="text-decoration-none"
-              >
-                {assignment.name}
-              </Link>
-            </div>
-            <div className="d-flex gap-2">
-              <Button
-                variant="warning"
-                size="sm"
-                onClick={() =>
-                  router.push(`/Courses/${cid}/Assignments/${assignment._id}`)
-                }
-              >
-                Edit
-              </Button>
-              <Button
-                variant="danger"
-                size="sm"
-                onClick={() => handleDelete(assignment._id)}
-              >
-                <FaTrash />
-              </Button>
-            </div>
-          </ListGroupItem>
-        ))}
+        {assignments
+          .filter((assignment) => assignment && assignment._id)
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          .map((assignment: any) => (
+            <ListGroupItem
+              key={assignment._id}
+              className="d-flex justify-content-between align-items-center"
+            >
+              <div>
+                <FaBook className="me-2 text-success" />
+                <Link
+                  href={`/Courses/${cid}/Assignments/${assignment._id}`}
+                  className="text-decoration-none"
+                >
+                  {assignment.name}
+                </Link>
+              </div>
+              <div className="d-flex gap-2">
+                <Button
+                  variant="warning"
+                  size="sm"
+                  onClick={() =>
+                    router.push(`/Courses/${cid}/Assignments/${assignment._id}`)
+                  }
+                >
+                  Edit
+                </Button>
+                <Button
+                  variant="danger"
+                  size="sm"
+                  onClick={() => handleDelete(assignment._id)}
+                >
+                  <FaTrash />
+                </Button>
+              </div>
+            </ListGroupItem>
+          ))}
       </ListGroup>
     </div>
   );

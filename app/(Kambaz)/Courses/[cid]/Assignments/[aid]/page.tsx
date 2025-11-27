@@ -28,6 +28,31 @@ export default function AssignmentEditor() {
     }
   }, [aid, isNewAssignment]);
 
+  useEffect(() => {
+  const fetchAssignment = async () => {
+    if (!isNewAssignment) {
+      try {
+        const fetchedAssignment = await client.findAssignmentById(
+          cid as string,
+          aid as string
+        );
+        setAssignment({
+          name: fetchedAssignment.name || "",
+          description: fetchedAssignment.description || "",
+          points: fetchedAssignment.points || 100,
+          dueDate: fetchedAssignment.dueDate || "",
+          availableFrom: fetchedAssignment.availableFrom || "",
+          availableUntil: fetchedAssignment.availableUntil || "",
+        });
+      } catch (error) {
+        console.error("Error fetching assignment:", error);
+      }
+    }
+  };
+  
+  fetchAssignment();
+}, [aid, cid, isNewAssignment]);
+
   const handleSave = async () => {
     if (isNewAssignment) {
       await client.createAssignment(cid as string, assignment);

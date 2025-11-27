@@ -1,92 +1,153 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import { useSelector, useDispatch } from "react-redux";
-import { setModules, addModule, updateModule, deleteModule, editModule } from "./reducer";
 import * as coursesClient from "../../client";
+import ModulesControls from "./ModulesControls";
+import ModuleControlButtons from "./ModuleControlButtons";
+import LessonControlButtons from "./LessonControlButtons";
+import { BsGripVertical } from "react-icons/bs";
+import { FaCaretDown, FaCaretRight } from "react-icons/fa";
 
 export default function Modules() {
   const { cid } = useParams();
   const [moduleName, setModuleName] = useState("");
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { modules } = useSelector((state: any) => state.modulesReducer);
-  const dispatch = useDispatch();
+  const [modules, setModules] = useState<any[]>([]);
+  const [editingModuleId, setEditingModuleId] = useState<string | null>(null);
+  const [collapsedModules, setCollapsedModules] = useState<Set<string>>(
+    new Set()
+  );
 
   const fetchModules = async () => {
-    const modules = await coursesClient.findModulesForCourse(cid as string);
-    dispatch(setModules(modules));
+    const fetchedModules = await coursesClient.findModulesForCourse(
+      cid as string
+    );
+    setModules(fetchedModules);
   };
 
   useEffect(() => {
     fetchModules();
-  }, []);
+  }, [cid]);
 
   const createModuleForCourse = async () => {
-    if (!cid) return;
-    const newModule = { name: moduleName, course: cid };
-    // eslint-disable-next-line @next/next/no-assign-module-variable
-    const module = await coursesClient.createModuleForCourse(
-      cid as string,
-      newModule
-    );
-    dispatch(setModules([...modules, module]));
+    if (!moduleName.trim()) return;
+    const newModule = { name: moduleName, course: cid, lessons: [] };
+    await coursesClient.createModuleForCourse(cid as string, newModule);
+    setModuleName("");
+    fetchModules();
   };
 
   const removeModule = async (moduleId: string) => {
-    await coursesClient.deleteModule(cid as string, moduleId);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    dispatch(setModules(modules.filter((m: any) => m._id !== moduleId)));
+    if (window.confirm("Are you sure you want to delete this module?")) {
+      await coursesClient.deleteModule(cid as string, moduleId);
+      fetchModules();
+    }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const saveModule = async (module: any) => {
-    await coursesClient.updateModule(cid as string, module);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    dispatch(setModules(modules.map((m: any) => (m._id === module._id ? module : m))));
+  const updateModuleName = async (moduleId: string, newName: string) => {
+    if (!newName.trim()) return;
+    const moduleUpdates = { _id: moduleId, name: newName };
+    await coursesClient.updateModule(cid as string, moduleUpdates);
+    setEditingModuleId(null);
+    fetchModules();
+  };
+
+  const toggleModuleCollapse = (moduleId: string) => {
+    setCollapsedModules((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(moduleId)) {
+        newSet.delete(moduleId);
+      } else {
+        newSet.add(moduleId);
+      }
+      return newSet;
+    });
+  };
+
+  const collapseAll = () => {
+    setCollapsedModules(new Set(modules.map((m) => m._id)));
   };
 
   return (
-    <div>
-      {/* Add your module controls here */}
-      <button onClick={createModuleForCourse}>Add Module</button>
-      <input
-        value={moduleName}
-        onChange={(e) => setModuleName(e.target.value)}
-        placeholder="Module Name"
+    <div id="wd-modules">
+      <ModulesControls
+        moduleName={moduleName}
+        setModuleName={setModuleName}
+        addModule={createModuleForCourse}
+        collapseAll={collapseAll}
       />
-
-      <ul className="list-group">
+      <br />
+      <ul className="list-group rounded-0">
         {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
         {modules.map((module: any) => (
-          <li key={module._id} className="list-group-item">
-            {!module.editing ? (
-              <span>{module.name}</span>
-            ) : (
-              <input
-                className="form-control"
-                defaultValue={module.name}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    saveModule({ ...module, editing: false });
-                  }
-                }}
-                onChange={(e) =>
-                  dispatch(updateModule({ ...module, name: e.target.value }))
-                }
-              />
-            )}
-            <button
-              onClick={() => dispatch(editModule(module._id))}
-              className="btn btn-sm btn-primary float-end"
-            >
-              Edit
-            </button>
-            <button
-              onClick={() => removeModule(module._id)}
-              className="btn btn-sm btn-danger float-end me-2"
-            >
-              Delete
-            </button>
+          <li key={module._id} className="list-group-item p-0 mb-5 border-gray">
+            <div className="p-3 ps-2 bg-secondary">
+              <div className="d-flex justify-content-between align-items-center">
+                <div className="d-flex align-items-center">
+                  <BsGripVertical className="me-2 fs-3" />
+                  {collapsedModules.has(module._id) ? (
+                    <FaCaretRight
+                      className="me-2"
+                      style={{ cursor: "pointer", fontSize: "1.5rem" }}
+                      onClick={() => toggleModuleCollapse(module._id)}
+                    />
+                  ) : (
+                    <FaCaretDown
+                      className="me-2"
+                      style={{ cursor: "pointer", fontSize: "1.5rem" }}
+                      onClick={() => toggleModuleCollapse(module._id)}
+                    />
+                  )}
+                  {editingModuleId === module._id ? (
+                    <input
+                      className="form-control d-inline-block w-auto"
+                      defaultValue={module.name}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          updateModuleName(module._id, e.currentTarget.value);
+                        }
+                      }}
+                      onBlur={(e) => {
+                        updateModuleName(module._id, e.currentTarget.value);
+                      }}
+                      autoFocus
+                    />
+                  ) : (
+                    <strong>{module.name}</strong>
+                  )}
+                </div>
+                <ModuleControlButtons
+                  moduleId={module._id}
+                  deleteModule={() => removeModule(module._id)}
+                  editModule={() => setEditingModuleId(module._id)}
+                />
+              </div>
+            </div>
+            {!collapsedModules.has(module._id) &&
+              module.lessons &&
+              module.lessons.length > 0 && (
+                <ul className="list-group rounded-0">
+                  {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                  {module.lessons.map((lesson: any) => (
+                    <li
+                      key={lesson._id}
+                      className="list-group-item p-3 ps-1 border-0"
+                      style={{
+                        borderLeft: "4px solid green",
+                        backgroundColor: "white",
+                      }}
+                    >
+                      <div className="d-flex justify-content-between align-items-center">
+                        <div className="d-flex align-items-center">
+                          <BsGripVertical className="me-3 fs-5" />
+                          <span>{lesson.name}</span>
+                        </div>
+                        <LessonControlButtons />
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
           </li>
         ))}
       </ul>
